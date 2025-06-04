@@ -1,0 +1,47 @@
+# GCP Project Configuration
+project_id = "your-gcp-project-id"  # Replace with your actual GCP project ID
+region     = "us-central1"          # GCP region to deploy resources
+zone       = "us-central1-a"        # GCP zone within the region
+
+# Application Configuration
+app_name        = "meta-agent"      # Name of the application
+container_image = "gcr.io/your-gcp-project-id/meta-agent:latest"  # Replace with your container image
+
+# Resource Allocation
+memory_limit   = "1Gi"              # Memory limit for Cloud Run service
+cpu_limit      = "1"                # CPU limit for Cloud Run service
+min_instances  = 0                  # Minimum number of instances (0 for scale to zero)
+max_instances  = 10                 # Maximum number of instances for scaling
+
+# Database Configuration
+db_tier        = "db-f1-micro"      # Machine type for the database instance (smallest tier)
+
+# Environment Variables for the application
+env_vars = {
+  # Meta-Agent Configuration
+  "META_AGENT_ENVIRONMENT"     = "production"
+  "META_AGENT_DEBUG_MODE"      = "false"
+  "META_AGENT_LOG_LEVEL"       = "INFO"
+  
+  # LLM Provider Configuration - Uncomment and configure one provider
+  # "META_AGENT_LLM_PROVIDER"    = "openai"
+  # "META_AGENT_LLM_API_KEY"     = "sm://project/secret/version"  # Use Secret Manager reference
+  # "META_AGENT_LLM_MODEL"       = "gpt-4"
+  
+  # "META_AGENT_LLM_PROVIDER"    = "anthropic"
+  # "META_AGENT_LLM_API_KEY"     = "sm://project/secret/version"  # Use Secret Manager reference
+  # "META_AGENT_LLM_MODEL"       = "claude-2"
+  
+  # "META_AGENT_LLM_PROVIDER"    = "google"
+  # "META_AGENT_LLM_API_KEY"     = "sm://project/secret/version"  # Use Secret Manager reference
+  # "META_AGENT_LLM_MODEL"       = "gemini-pro"
+  
+  # Server Configuration
+  "META_AGENT_HOST"            = "0.0.0.0"
+  "META_AGENT_PORT"            = "8080"  # Cloud Run uses port 8080 by default
+  "META_AGENT_WORKERS"         = "2"
+  
+  # Connector Configuration
+  # "META_AGENT_SLACK_API_TOKEN"      = "sm://project/slack-token/version"
+  # "META_AGENT_SLACK_SIGNING_SECRET" = "sm://project/slack-secret/version"
+}
